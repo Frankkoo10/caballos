@@ -1,3 +1,13 @@
+// ==========================================
+// 1. CONFIGURACIÓN DE SUPABASE
+// ==========================================
+const supabaseUrl = 'https://wgqqbahoalozgfukioza.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndncXFiYWhvYWxvemdmdWtpb3phIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyNTA3OTYsImV4cCI6MjA5OTgyNjc5Nn0.v_kpYceS8ceIUBNaLLHjfyBeFA2Y3lDRy7Yn6cb5Uz8';
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+let currentUser = null;
+let balance = 0; // Se actualizará al leer la base de datos
+
 // Configuración de los 5 Caballos
 const horsesConfig = [
     { id: 0, name: "Relámpago", color: "#ff4d4d", colorName: "Rojo" },
@@ -8,11 +18,62 @@ const horsesConfig = [
 ];
 
 let horses = [];
-let balance = 10000;
 let currentBets = [0, 0, 0, 0, 0]; // Dinero apostado en cada caballo
 let selectedChip = 100; // Valor de la ficha seleccionada
 let isRacing = false;
 const houseEdge = 0.10; // 10% de ventaja para el casino
+
+// ==========================================
+// 2. LÓGICA DE AUTENTICACIÓN Y SALDOS
+// ==========================================
+async function verificarSesionYJugar() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    
+    if (!session) {
+        // Redirigir al lobby si no está logueado
+        window.location.href = 'index.html'; 
+        return;
+    }
+    
+    currentUser = session.user;
+
+    // Buscamos su saldo en la tabla "perfiles"
+    const { data: perfilData } = await supabaseClient
+        .from('perfiles')
+        .select('saldo')
+        .eq('id', currentUser.id)
+        .single();
+
+    if (perfilData) {
+        balance = parseFloat(perfilData.saldo);
+    } else {
+        // Si no tiene perfil, le damos el bono inicial y lo creamos
+        balance = 10000; 
+        await guardarSaldoEnBD(); 
+    }
+
+    updateBalance();
+    newRound(); // Iniciar el juego una vez tengamos los datos
+}
+
+async function guardarSaldoEnBD() {
+    if(!currentUser) return;
+    
+    await supabaseClient
+        .from('perfiles')
+        .upsert({ 
+            id: currentUser.id, 
+            saldo: balance 
+        });
+}
+
+// Iniciar sesión apenas carga la ventana
+window.onload = verificarSesionYJugar;
+
+
+// ==========================================
+// 3. LÓGICA DEL JUEGO
+// ==========================================
 
 // Inicializar nueva ronda
 function newRound() {
@@ -112,6 +173,7 @@ function addBet(horseId) {
     
     updateBalance();
     updateBetBadges();
+    guardarSaldoEnBD(); // <-- GUARDAR EN SUPABASE EL DESCUENTO
     
     document.getElementById("status-msg").innerText = `Añadiste $${selectedChip} a ${horses[horseId].name}.`;
 }
@@ -126,6 +188,9 @@ function clearBets() {
     
     updateBalance();
     updateBetBadges();
+    
+    // Si hubo reembolso, guardamos el saldo en la base de datos
+    if(refundAmount > 0) guardarSaldoEnBD(); 
     
     document.getElementById("status-msg").innerText = "Apuestas retiradas.";
 }
@@ -247,20 +312,20 @@ function finishRace(winnerId) {
     }
 
     updateBalance();
+    guardarSaldoEnBD(); // <-- GUARDAR GANANCIAS/PÉRDIDAS EN SUPABASE
 
     setTimeout(() => {
         if (balance <= 0) {
             alert("¡Bancarrota! Te otorgamos un bono de emergencia de $2000.");
             balance = 2000;
             updateBalance();
+            guardarSaldoEnBD(); // <-- GUARDAR BONO EN SUPABASE
         }
         newRound();
     }, 5000);
 }
 
 function updateBalance() {
-    document.getElementById("balance").innerText = balance;
+    // Usamos toFixed(2) para asegurar que se vea bien como moneda
+    document.getElementById("balance").innerText = balance.toFixed(2);
 }
-
-// Cargar primera ronda
-newRound();
