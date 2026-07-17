@@ -1,0 +1,380 @@
+:root {
+    --bg-dark: #12181f;
+    --panel-bg: #1e2732;
+    --accent-gold: #f39c12;
+    --text-light: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: var(--accent-gold);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.bankroll-board {
+    font-size: 24px;
+    font-weight: bold;
+    background: #0d1117;
+    padding: 10px 25px;
+    border-radius: 8px;
+    border: 2px solid var(--accent-gold);
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(243, 156, 18, 0.2);
+    text-align: center;
+}
+
+.game-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+    align-items: stretch;
+}
+
+.betting-panel {
+    flex: 1.2;
+    background: var(--panel-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    color: #e0e0e0;
+}
+
+.subtitle {
+    margin: 0 0 15px 0;
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* Tabla Responsiva */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    min-width: 300px;
+}
+
+th, td {
+    padding: 12px 10px;
+    text-align: center;
+    border-bottom: 1px solid #2f3e4e;
+}
+
+th {
+    background-color: #141a22;
+    color: #aaa;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.horse-row {
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.horse-row:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.horse-row:active {
+    transform: scale(0.99);
+}
+
+.color-box {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Fichas Estilo Casino */
+.chips-selector {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 15px 0;
+    transition: opacity 0.3s;
+}
+
+.chips-selector.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.chip {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 3px dashed rgba(255, 255, 255, 0.75);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.chip-inner {
+    width: 37px;
+    height: 37px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 14px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.chip-100 { background: radial-gradient(circle, #2980b9, #1f3a52); }
+.chip-250 { background: radial-gradient(circle, #27ae60, #145a32); }
+.chip-500 { background: radial-gradient(circle, #e74c3c, #7b241c); }
+.chip-1000 { background: radial-gradient(circle, #f39c12, #9a6306); }
+.chip-5000 { background: radial-gradient(circle, #8e44ad, #512e5f); }
+
+.chip.active {
+    transform: scale(1.15) translateY(-5px);
+    box-shadow: 0 0 0 2px #000, 0 0 15px #f39c12, 0 10px 20px rgba(0,0,0,0.7);
+    border-color: #fff;
+    z-index: 5;
+}
+
+.chip:hover:not(.active) {
+    transform: scale(1.05);
+}
+
+.bet-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: #888;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 13px;
+    display: inline-block;
+    min-width: 45px;
+    transition: all 0.2s ease-in-out;
+}
+
+.bet-badge.has-bet {
+    background: #f39c12;
+    color: #000;
+    box-shadow: 0 0 10px rgba(243, 156, 18, 0.6);
+    transform: scale(1.1);
+}
+
+/* Controles */
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    flex: 1;
+    padding: 14px 20px;
+    background: var(--accent-gold);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.1s, background 0.2s, opacity 0.3s;
+}
+
+#clear-btn {
+    background: #c0392b;
+    color: #fff;
+    flex: 0.6;
+}
+
+#clear-btn:hover { background: #962d22; }
+button:hover { background: #e67e22; transform: scale(1.02); }
+button:disabled {
+    background: #555 !important;
+    color: #aaa !important;
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.5;
+}
+
+/* Pista Vertical */
+.track-panel {
+    flex: 1.8;
+    height: 620px; 
+    background: #2b1d0c;
+    padding: 15px 5px;
+    border-radius: 10px;
+    border: 4px solid #5a3d1e;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+.lane {
+    width: 20%;
+    height: 100%;
+    border-right: 2px dashed #8c6239;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.lane:last-child { border-right: none; }
+
+.finish-line {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: repeating-linear-gradient(90deg, #fff, #fff 10px, #000 10px, #000 20px);
+    z-index: 1;
+}
+
+.horse-sprite {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: bottom 0.1s linear;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+.horse-emoji {
+    display: inline-block;
+    font-size: 32px;
+    transform: rotate(-90deg);
+}
+
+.horse-number {
+    font-size: 11px;
+    font-weight: bold;
+    background: #000;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 10px;
+}
+
+#status-msg {
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================================
+   MEDIA QUERIES PARA CELULARES (RESPONSIVE)
+   ========================================= */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .bankroll-board {
+        font-size: 20px;
+        padding: 8px 15px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .game-container {
+        flex-direction: column; /* Apila los paneles verticalmente */
+        gap: 15px;
+    }
+
+    .betting-panel, .track-panel {
+        width: 100%;
+        flex: none;
+        box-sizing: border-box;
+    }
+
+    .track-panel {
+        height: 450px; /* Reduce la altura en celulares para evitar mucho scroll */
+    }
+
+    th, td {
+        padding: 8px 5px;
+        font-size: 12px;
+    }
+
+    .chip {
+        width: 45px;
+        height: 45px;
+    }
+
+    .chip-inner {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
+    }
+
+    .controls {
+        flex-direction: column; /* Botones uno arriba del otro */
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .horse-emoji {
+        font-size: 26px; /* Emojis un poco más chicos para que no se superpongan */
+    }
+
+    .finish-line {
+        top: 40px;
+    }
+}
