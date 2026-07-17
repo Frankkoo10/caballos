@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Casino Hipódromo - Crazy Time Vertical</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>🐎 Royal Derby 🐎</h1>
+    <div class="bankroll-board">Créditos: $<span id="balance">10000</span></div>
+
+    <div class="game-container">
+        <!-- Panel de Apuestas -->
+        <div class="betting-panel">
+            <h3>1. Elige tus Caballos</h3>
+            <p class="subtitle">Haz clic en la tabla para colocar fichas</p>
+            
+            <div class="table-responsive">
+                <table id="odds-table">
+                    <thead>
+                        <tr>
+                            <th>Caballo</th>
+                            <th>Prob.</th>
+                            <th>Pago</th>
+                            <th>Tu Apuesta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="odds-body">
+                        <!-- Se genera dinámicamente con JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>2. Tus Fichas</h3>
+            <div class="chips-selector" id="chips-container">
+                <div class="chip chip-100 active" id="chip-100" onclick="selectChip(100)">
+                    <div class="chip-inner">100</div>
+                </div>
+                <div class="chip chip-250" id="chip-250" onclick="selectChip(250)">
+                    <div class="chip-inner">250</div>
+                </div>
+                <div class="chip chip-500" id="chip-500" onclick="selectChip(500)">
+                    <div class="chip-inner">500</div>
+                </div>
+                <div class="chip chip-1000" id="chip-1000" onclick="selectChip(1000)">
+                    <div class="chip-inner">1K</div>
+                </div>
+                <div class="chip chip-5000" id="chip-5000" onclick="selectChip(5000)">
+                    <div class="chip-inner">5K</div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="clear-btn" onclick="clearBets()">Limpiar</button>
+                <button id="race-btn" onclick="startRace()">¡Apostar y Correr!</button>
+            </div>
+            <div id="status-msg">Selecciona una ficha y haz clic en un caballo.</div>
+        </div>
+
+        <!-- Pista de Carreras Vertical -->
+        <div class="track-panel" id="track">
+            <div class="finish-line"></div>
+            <!-- Los carriles se generan dinámicamente -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
