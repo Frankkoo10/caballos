@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Casino Hipódromo - En Vivo</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="app">
+
+    <!-- Menú Superior y Logo -->
+    <a href="https://frankkoo10.github.io/casinou/" class="top-logo">
+        <img src="logo.png" alt="V Logo" />
+    </a>
+
+    <!-- Botón de Información -->
+    <button class="info-btn" onclick="toggleInfo()">
+        <img src="info.png" alt="Info" />
+    </button>
+
+    <!-- Modal de Información -->
+    <div id="info-modal" class="info-modal">
+        <div class="info-content">
+            <h3>¿Cómo Jugar?</h3>
+            <p>1. Selecciona el valor de la ficha.</p>
+            <p>2. Haz clic en el caballo al que deseas apostar.</p>
+            <p>3. Dale a "Confirmar Apuestas" antes de que el temporizador llegue a cero.</p>
+            <p>4. ¡Disfruta de la carrera en vivo con el resto de los jugadores!</p>
+            <button onclick="toggleInfo()">Entendido</button>
+        </div>
+    </div>
+
+    <!-- Indicadores y Saldos -->
+    <div class="online-indicator">
+        <span class="dot"></span> <span id="online-count-value">1</span> Jugador(es)
+    </div>
+
+    <div id="history-bar" class="history-bar"></div>
+
+    <div class="balance-container">
+        Créditos: $<span id="balance-amount">CARGANDO...</span>
+    </div>
+
+    <h1>Royal Derby</h1>
+    <div id="status-msg" class="message">Verificando sesión y sincronizando servidor...</div>
+
+    <div class="game-container">
+        <!-- Pista de Carreras Vertical -->
+        <div class="track-panel" id="track">
+            <div class="finish-line"></div>
+            <!-- Los carriles se generan dinámicamente con JS -->
+        </div>
+
+        <!-- Panel de Apuestas -->
+        <div class="betting-panel">
+            <div class="table-responsive">
+                <table id="odds-table">
+                    <thead>
+                        <tr>
+                            <th>Caballo</th>
+                            <th>Prob.</th>
+                            <th>Pago</th>
+                            <th>Tu Apuesta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="odds-body">
+                        <!-- Se genera dinámicamente con JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="betting-section">
+                <div class="chips-selector" id="chips-container">
+                    <div class="chip chip-100 active" id="chip-100" onclick="selectChip(100)">
+                        <div class="chip-inner">100</div>
+                    </div>
+                    <div class="chip chip-250" id="chip-250" onclick="selectChip(250)">
+                        <div class="chip-inner">250</div>
+                    </div>
+                    <div class="chip chip-500" id="chip-500" onclick="selectChip(500)">
+                        <div class="chip-inner">500</div>
+                    </div>
+                    <div class="chip chip-1000" id="chip-1000" onclick="selectChip(1000)">
+                        <div class="chip-inner">1K</div>
+                    </div>
+                    <div class="chip chip-5000" id="chip-5000" onclick="selectChip(5000)">
+                        <div class="chip-inner">5K</div>
+                    </div>
+                </div>
+
+                <div class="bet-actions">
+                    <button id="btn-clear" onclick="limpiarApuestas()">Limpiar</button>
+                    <button id="btn-apostar" onclick="registrarApuesta()">Confirmar Apuestas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón Flotante y Chat -->
+    <button id="chat-toggle-btn" class="chat-toggle-btn" onclick="toggleChat()">
+        <img src="chat.png" alt="Chat" class="chat-icon"> Chat
+    </button>
+
+    <div id="chat-popup" class="chat-popup">
+        <div class="chat-header">
+            <span>Chat en Vivo</span>
+            <button class="chat-close-btn" onclick="toggleChat()">
+                <img src="alerta.png" alt="Cerrar" class="close-icon">
+            </button>
+        </div>
+        <div id="chat-messages" class="chat-messages"></div>
+        <div class="chat-input-group">
+            <input type="text" id="chat-input" placeholder="Escribe un mensaje..." onkeypress="manejarEnterChat(event)" autocomplete="off">
+            <button id="btn-send-chat" onclick="enviarMensajeChat()">Enviar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
