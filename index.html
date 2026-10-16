@@ -9,17 +9,14 @@
 </head>
 <body class="app">
 
-    <!-- Menú Superior y Logo -->
     <a href="https://frankkoo10.github.io/casinou/" class="top-logo">
         <img src="logo.png" alt="V Logo" />
     </a>
 
-    <!-- Botón de Información -->
     <button class="info-btn" onclick="toggleInfo()">
         <img src="info.png" alt="Info" />
     </button>
 
-    <!-- Modal de Información -->
     <div id="info-modal" class="info-modal">
         <div class="info-content">
             <h3>¿Cómo Jugar?</h3>
@@ -31,7 +28,6 @@
         </div>
     </div>
 
-    <!-- Indicadores y Saldos -->
     <div class="online-indicator">
         <span class="dot"></span> <span id="online-count-value">1</span> Jugador(es)
     </div>
@@ -46,13 +42,12 @@
     <div id="status-msg" class="message">Verificando sesión y sincronizando servidor...</div>
 
     <div class="game-container">
-        <!-- Pista de Carreras Vertical -->
+
         <div class="track-panel" id="track">
             <div class="finish-line"></div>
-            <!-- Los carriles se generan dinámicamente con JS -->
+
         </div>
 
-        <!-- Panel de Apuestas -->
         <div class="betting-panel">
             <div class="table-responsive">
                 <table id="odds-table">
@@ -65,7 +60,7 @@
                         </tr>
                     </thead>
                     <tbody id="odds-body">
-                        <!-- Se genera dinámicamente con JS -->
+
                     </tbody>
                 </table>
             </div>
@@ -97,7 +92,6 @@
         </div>
     </div>
 
-    <!-- Botón Flotante y Chat -->
     <button id="chat-toggle-btn" class="chat-toggle-btn" onclick="toggleChat()">
         <img src="chat.png" alt="Chat" class="chat-icon"> Chat
     </button>
